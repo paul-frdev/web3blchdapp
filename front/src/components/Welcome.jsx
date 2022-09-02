@@ -2,11 +2,12 @@ import React, { useContext } from 'react';
 import { AiFillPlayCircle } from 'react-icons/ai';
 import { SiEthereum } from 'react-icons/si';
 import { BsInfoCircle } from 'react-icons/bs';
-import { Input } from '../shared/Input';
 import { Loader } from '.';
 import { useState } from 'react';
 
+import { Input } from './shared/Input';
 import { TransactionContext } from '../context/TransactionContext';
+import { shortenAddress } from './shared/helpers';
 
 export const Welcome = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -62,7 +63,7 @@ export const Welcome = () => {
                 <BsInfoCircle fontSize={17} color="#fff" />
               </div>
               <div>
-                <p className="text-white font-light text-sm">0X......sdfsdf</p>
+                <p className="text-white font-light text-sm">{shortenAddress(currentAccount)}</p>
                 <p className="text-white font-semibold text-lg mt-1">Ethereum</p>
               </div>
             </div>
