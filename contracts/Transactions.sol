@@ -1,51 +1,37 @@
-// SPDX-License-Identifier: MTI
+// SPDX-License-Identifier: UNLICENSED
+
 pragma solidity ^0.8.0;
 
+import "hardhat/console.sol";
+
 contract Transactions {
-  uint txCount;
-  address owner;
+    uint256 transactionCount;
 
-  event Transfer(address _from, address _to, uint _amount, string _msg, uint _timestamp, string _keyword);
-
-  struct TransferStruct {
-    address sender;
-    address receiver;
-    uint amount;
-    string message;
-    uint timestamp;
-    string keyword;
-  }
-
-  constructor() {
-    owner = msg.sender;
-  }
+    event Transfer(address from, address receiver, uint amount, string message, uint256 timestamp, string keyword);
   
-  modifier onlyOwner {
-    require(msg.sender == owner, "not an owner!!!");
-    _;
-  }
+    struct TransferStruct {
+        address sender;
+        address receiver;
+        uint amount;
+        string message;
+        uint256 timestamp;
+        string keyword;
+    }
 
-  TransferStruct[] public transactions;
+    TransferStruct[] transactions;
 
-  function addToBlockchain(address payable _receiver, uint _amount, string memory _message, string memory _keyword) public onlyOwner {
-    txCount++;
-    transactions.push(TransferStruct({
-      sender: msg.sender,
-      receiver: _receiver,
-      amount: _amount,
-      message: _message,
-      timestamp: block.timestamp,
-      keyword: _keyword
-    }));
+    function addToBlockchain(address payable receiver, uint amount, string memory message, string memory keyword) public {
+        transactionCount += 1;
+        transactions.push(TransferStruct(msg.sender, receiver, amount, message, block.timestamp, keyword));
 
-    emit Transfer(msg.sender, _receiver, _amount, _message, block.timestamp, _keyword);
-  }
+        emit Transfer(msg.sender, receiver, amount, message, block.timestamp, keyword);
+    }
 
-  function getAllTransactions() public view returns(TransferStruct[] memory) {
-    return transactions;
-  }
+    function getAllTransactions() public view returns (TransferStruct[] memory) {
+        return transactions;
+    }
 
-  function getAllTransactionCount() public view returns(uint) {
-    return txCount;
-  }
+    function getTransactionCount() public view returns (uint256) {
+        return transactionCount;
+    }
 }

@@ -10,9 +10,9 @@ import { TransactionContext } from '../context/TransactionContext';
 import { shortenAddress } from './shared/helpers';
 
 export const Welcome = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const { connectWallet, currentAccount, formData, handleChange, sandTransaction } =
+  const { connectWallet, currentAccount, formData, handleChange, sendTransaction, isLoading } =
     useContext(TransactionContext);
+
   const commonStyles =
     'min-h-[70px] sm:px-0 px-2 sm:min-w-[120px] flex justify-center items-center border-[0.5px] border-gray-400 text-sm font-light text-white';
 
@@ -21,7 +21,7 @@ export const Welcome = () => {
     const { addressTo, amount, keyword, message } = formData;
     if (!addressTo || !amount || !keyword || !message) return;
 
-    sandTransaction();
+    sendTransaction();
   };
 
   return (
